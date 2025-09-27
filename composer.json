@@ -72,6 +72,9 @@
         ],
         "analyse-type-coverage": [
             "@php ./vendor/bin/pest --type-coverage --min=100 --memory-limit=2G"
+        ],
+        "rector": [
+            "@php ./vendor/bin/rector"
         ]
     },
     "extra": {

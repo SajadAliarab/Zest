@@ -1,0 +1,43 @@
+networks:
+    zest_network:
+        name: zest_network
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: zest_app
+        networks:
+            - zest_network
+        restart: always
+        volumes:
+            - ./:/var/www
+        ports:
+            - "6668:6668"
+        depends_on:
+            - mailhog
+
+    web:
+        image: nginx:stable-alpine3.21-perl
+        container_name: zest_web
+        ports:
+            - "8080:80"
+        volumes:
+            - ./:/var/www
+            - ./nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - zest_network
+        depends_on:
+            - app
+
+    mailhog:
+        image: mailhog/mailhog
+        container_name: zest_mailhog
+        ports:
+            - "1025:1025"
+            - "9000:9000"
+        networks:
+            - zest_network
+
+
+
