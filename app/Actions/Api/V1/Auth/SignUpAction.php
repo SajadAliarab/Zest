@@ -13,18 +13,19 @@ class SignUpAction
     public function handle(SignUpDto $dto): User
     {
         DB::beginTransaction();
-        try{
+        try {
             $user = User::query()->create([
                 'name' => $dto->name,
                 'email' => $dto->email,
-                'password'=>$dto->password,
+                'password' => $dto->password,
             ]);
-            $user->notify( new SignUpNotification);
-        }catch (Throwable $exception){
+            $user->notify(new SignUpNotification);
+        } catch (Throwable $exception) {
             DB::rollBack();
             throw $exception;
         }
         DB::commit();
+
         return $user;
 
     }

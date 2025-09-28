@@ -13,16 +13,17 @@ class SingUpRequest extends FormRequest implements HasDataTransferObjectInterfac
     {
         return true;
     }
+
     public function rules(): array
     {
         return [
-            'name' => ['required','string'],
+            'name' => ['required', 'string'],
             'email' => ['required', 'email', 'max:254', 'unique:users,email'],
             'password' => ['required',
-                            'string',
-                            'confirmed',
-                            Password::min(8)->letters()->mixedCase()->numbers()->symbols(),
-                ],
+                'string',
+                'confirmed',
+                Password::min(8)->letters()->mixedCase()->numbers()->symbols(),
+            ],
         ];
     }
 

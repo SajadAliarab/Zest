@@ -1,10 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\SignUpController;
-
-
+use Illuminate\Support\Facades\Route;
 
 Route::name('api.')
     ->group(function () {
@@ -14,7 +11,7 @@ Route::name('api.')
                 Route::name('auth.')
                     ->prefix('auth')
                     ->group(function () {
-                        Route::post('/',SignUpController::class)->name('signup');
+                        Route::post('/', SignUpController::class)->name('signup');
                     });
 
             });

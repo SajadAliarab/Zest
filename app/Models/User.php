@@ -22,7 +22,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
  */
-class User extends Authenticatable implements FilamentUser , MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
