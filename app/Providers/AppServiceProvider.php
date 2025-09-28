@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Enums\MorphMapEnum;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Enforce morph mapping
+        Relation::enforceMorphMap(MorphMapEnum::options());
     }
 }

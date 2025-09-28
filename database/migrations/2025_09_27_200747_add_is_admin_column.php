@@ -14,6 +14,7 @@ return new class extends Migration
                 ->after('password');
         });
     }
+
     public function down(): void
     {
         Schema::table('Users', function (Blueprint $table) {

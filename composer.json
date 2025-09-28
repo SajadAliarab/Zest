@@ -70,7 +70,7 @@
         "analyse": [
             "@php ./vendor/bin/phpstan analyse app --memory-limit=2G"
         ],
-        "analyse-type-coverage": [
+        "type-coverage": [
             "@php ./vendor/bin/pest --type-coverage --min=100 --memory-limit=2G"
         ],
         "rector": [
