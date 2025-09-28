@@ -13,7 +13,7 @@ services:
         volumes:
             - ./:/var/www
         ports:
-            - "6668:6668"
+            - "9000:9000"
         depends_on:
             - mailhog
 
@@ -35,7 +35,7 @@ services:
         container_name: zest_mailhog
         ports:
             - "1025:1025"
-            - "9000:9000"
+            - "8025:8025"
         networks:
             - zest_network
 
