@@ -5,6 +5,7 @@ namespace App\Actions\Api\V1\Auth;
 use App\DataTransferObjects\Auth\SignUpDto;
 use App\Models\User;
 use App\Notifications\SignUpNotification;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -13,6 +14,7 @@ class SignUpAction
     public function handle(SignUpDto $dto): User
     {
         DB::beginTransaction();
+
         try {
             $user = User::query()->create([
                 'name' => $dto->name,
@@ -20,8 +22,10 @@ class SignUpAction
                 'password' => $dto->password,
             ]);
             $user->notify(new SignUpNotification);
+            event(new Registered($user));
         } catch (Throwable $exception) {
             DB::rollBack();
+
             throw $exception;
         }
         DB::commit();

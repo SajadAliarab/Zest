@@ -7,7 +7,7 @@ use App\DataTransferObjects\Auth\SignUpDto;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class SingUpRequest extends FormRequest implements HasDataTransferObjectInterface
+class SignUpRequest extends FormRequest implements HasDataTransferObjectInterface
 {
     public function authorize(): bool
     {

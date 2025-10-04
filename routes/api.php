@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Auth\SignInController;
 use App\Http\Controllers\Api\V1\Auth\SignUpController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,7 @@ Route::name('api.')
                     ->prefix('auth')
                     ->group(function () {
                         Route::post('/', SignUpController::class)->name('signup');
+                        Route::post('/login', SignInController::class)->name('login');
                     });
 
             });
