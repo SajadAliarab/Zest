@@ -13,9 +13,13 @@ class SignInController extends ApiBaseController
     public function __invoke(SignInAction $action, SignInRequest $request)
     {
         $user = $action->handle($request->toDto());
+        $token = $user->createToken($request->device)->plainTextToken;
 
         return response()->apiSuccess(
-            data: new UserResource($user),
+            data: [
+                'user'=>new UserResource($user),
+                'remember'=>$request->remember,
+                'token'=>$token],
             messages: 'User Sign In Successfully',
             responseCode: Response::HTTP_OK
         );

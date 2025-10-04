@@ -18,6 +18,8 @@ class SignInRequest extends FormRequest implements HasDataTransferObjectInterfac
         return [
             'email' => ['required', 'email'],
             'password' => ['required'],
+            'remember_me' => ['boolean'],
+            'device' => ['required', 'string'],
         ];
     }
 
@@ -26,6 +28,8 @@ class SignInRequest extends FormRequest implements HasDataTransferObjectInterfac
         return new SignInDto(
             email: $this->input('email'),
             password: $this->input('password'),
+            rememberMe: $this->input('remember'),
+            device: $this->input('device')
         );
     }
 }
