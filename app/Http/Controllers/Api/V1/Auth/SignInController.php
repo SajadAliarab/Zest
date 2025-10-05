@@ -17,9 +17,9 @@ class SignInController extends ApiBaseController
 
         return response()->apiSuccess(
             data: [
-                'user'=>new UserResource($user),
-                'remember'=>$request->remember,
-                'token'=>$token],
+                'user' => new UserResource($user),
+                'remember' => $request->remember,
+                'token' => $token],
             messages: 'User Sign In Successfully',
             responseCode: Response::HTTP_OK
         );

@@ -1,6 +1,7 @@
 networks:
     zest_network:
         name: zest_network
+
 services:
     app:
         build:
@@ -14,8 +15,41 @@ services:
             - ./:/var/www
         ports:
             - "9000:9000"
+        environment:
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql
+            - DB_PORT=3306
+            - DB_DATABASE=zest
+            - DB_USERNAME=zest_user
+            - DB_PASSWORD=Abc@1234
+            - DB_SSLMODE=disabled
         depends_on:
-            - mailhog
+            mysql:
+                condition: service_healthy
+            mailhog:
+                condition: service_started
+
+    mysql:
+        image: mysql:8.0
+        container_name: zest_mysql
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password --ssl=0
+        environment:
+            MYSQL_DATABASE: zest
+            MYSQL_USER: zest_user
+            MYSQL_PASSWORD: Abc@1234
+            MYSQL_ROOT_PASSWORD: Abc@1234
+        ports:
+            - "3307:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+        networks:
+            - zest_network
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pAbc@1234"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
 
     web:
         image: nginx:stable-alpine3.21-perl
@@ -39,5 +73,23 @@ services:
         networks:
             - zest_network
 
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: zest_phpmyadmin
+        restart: always
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+            PMA_USER: zest_user
+            PMA_PASSWORD: Abc@1234
+            MYSQL_ROOT_PASSWORD: Abc@1234
+        ports:
+            - "8081:80"
+        networks:
+            - zest_network
+        depends_on:
+            - mysql
 
-
+volumes:
+    mysql_data:
+        driver: local

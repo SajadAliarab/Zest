@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Throwable;
 
 class SignInAction
 {
@@ -20,6 +19,7 @@ class SignInAction
             'email' => ['The provided credentials are incorrect.'],
         ]));
         Auth::login($user);
+
         return $user;
     }
 }
