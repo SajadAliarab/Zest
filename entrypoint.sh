@@ -3,7 +3,7 @@ set -e
 
 # Wait for MySQL to be ready
 echo "Waiting for MySQL to be ready..."
-until mariadb -h"${DB_HOST:-mysql}" -u"${DB_USERNAME:-zest_user}" -p"${DB_PASSWORD:-Abc@1234}" --skip-ssl -e "SELECT 1" > /dev/null 2>&1; do
+until mariadb -h"${DB_HOST}" -u"${DB_USERNAME}" -p"${DB_PASSWORD}" --skip-ssl -e "SELECT 1" > /dev/null 2>&1; do
     echo "MySQL is unavailable - sleeping"
     sleep 2
 done

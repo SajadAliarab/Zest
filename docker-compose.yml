@@ -15,14 +15,8 @@ services:
             - ./:/var/www
         ports:
             - "9000:9000"
-        environment:
-            - DB_CONNECTION=mysql
-            - DB_HOST=mysql
-            - DB_PORT=3306
-            - DB_DATABASE=zest
-            - DB_USERNAME=zest_user
-            - DB_PASSWORD=Abc@1234
-            - DB_SSLMODE=disabled
+        env_file:
+            - .env.docker
         depends_on:
             mysql:
                 condition: service_healthy
@@ -34,11 +28,8 @@ services:
         container_name: zest_mysql
         restart: always
         command: --default-authentication-plugin=mysql_native_password --ssl=0
-        environment:
-            MYSQL_DATABASE: zest
-            MYSQL_USER: zest_user
-            MYSQL_PASSWORD: Abc@1234
-            MYSQL_ROOT_PASSWORD: Abc@1234
+        env_file:
+            - .env.docker
         ports:
             - "3307:3306"
         volumes:
@@ -46,7 +37,7 @@ services:
         networks:
             - zest_network
         healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pAbc@1234"]
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
             interval: 10s
             timeout: 5s
             retries: 5
@@ -77,12 +68,8 @@ services:
         image: phpmyadmin/phpmyadmin
         container_name: zest_phpmyadmin
         restart: always
-        environment:
-            PMA_HOST: mysql
-            PMA_PORT: 3306
-            PMA_USER: zest_user
-            PMA_PASSWORD: Abc@1234
-            MYSQL_ROOT_PASSWORD: Abc@1234
+        env_file:
+            - .env.docker
         ports:
             - "8081:80"
         networks:

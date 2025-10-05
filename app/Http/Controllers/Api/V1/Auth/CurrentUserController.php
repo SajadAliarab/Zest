@@ -15,8 +15,8 @@ class CurrentUserController extends ApiBaseController
         return response()->apiSuccess(
             data: [
                 'user' => new UserResource($user),
-                'role' => $user->isAdmin() ? 'admin' : 'user',
-                'token' => $user->currentAccessToken()->expires_at,
+                'is_admin' => $user->IsAdmin(),
+                'token_expire' => $user->currentAccessToken()->expires_at,
             ],
             messages: 'User data retrieved successfully.',
             responseCode: Response::HTTP_OK
