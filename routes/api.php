@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\Auth\SignInController;
 use App\Http\Controllers\Api\V1\Auth\SignUpController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
+use App\Http\Controllers\Api\V1\Auth\SignOutController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('api.')
@@ -14,10 +15,10 @@ Route::name('api.')
                     ->prefix('auth')
                     ->group(function () {
                         Route::post('/', SignUpController::class)->name('signup');
-                        Route::post('/login', SignInController::class)->name('login');
+                        Route::post('/signin', SignInController::class)->name('login');
+                        Route::delete('/', SignOutController::class)->middleware('auth:sanctum')->name('logout');
                     });
                 Route::post('/email/verification-notification', VerifyEmailController::class)
                     ->middleware(['auth:sanctum', 'throttle:6,1']);
-
             });
     });
