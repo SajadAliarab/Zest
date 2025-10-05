@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Auth\CurrentUserController;
 use App\Http\Controllers\Api\V1\Auth\SignInController;
+use App\Http\Controllers\Api\V1\Auth\SignOutController;
 use App\Http\Controllers\Api\V1\Auth\SignUpController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
-use App\Http\Controllers\Api\V1\Auth\SignOutController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('api.')
@@ -17,6 +18,7 @@ Route::name('api.')
                         Route::post('/', SignUpController::class)->name('signup');
                         Route::post('/signin', SignInController::class)->name('login');
                         Route::delete('/', SignOutController::class)->middleware('auth:sanctum')->name('logout');
+                        Route::get('/', CurrentUserController::class)->middleware('auth:sanctum')->name('user');
                     });
                 Route::post('/email/verification-notification', VerifyEmailController::class)
                     ->middleware(['auth:sanctum', 'throttle:6,1']);

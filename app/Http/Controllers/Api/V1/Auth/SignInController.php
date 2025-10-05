@@ -22,7 +22,6 @@ class SignInController extends ApiBaseController
             expiresAt: $expiresAt
         )->plainTextToken;
 
-
         return response()->apiSuccess(
             data: [
                 'user' => new UserResource($user),
