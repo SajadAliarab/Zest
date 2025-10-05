@@ -8,6 +8,5 @@ readonly class SignInDto
         public string $email,
         public string $password,
         public bool $rememberMe,
-        public string $device,
     ) {}
 }

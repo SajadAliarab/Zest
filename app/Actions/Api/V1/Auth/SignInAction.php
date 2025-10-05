@@ -18,6 +18,9 @@ class SignInAction
         throw_if(! $user || ! Hash::check($dto->password, $user->password), ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],
         ]));
+        throw_if(! $user->hasVerifiedEmail(), ValidationException::withMessages([
+            'email' => ['Email is not verified.'],
+        ]));
         Auth::login($user);
 
         return $user;

@@ -4,7 +4,6 @@ namespace App\Actions\Api\V1\Auth;
 
 use App\DataTransferObjects\Auth\SignUpDto;
 use App\Models\User;
-use App\Notifications\SignUpNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -21,7 +20,6 @@ class SignUpAction
                 'email' => $dto->email,
                 'password' => $dto->password,
             ]);
-            $user->notify(new SignUpNotification);
             event(new Registered($user));
         } catch (Throwable $exception) {
             DB::rollBack();
