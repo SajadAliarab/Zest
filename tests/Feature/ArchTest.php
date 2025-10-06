@@ -24,12 +24,12 @@ arch('http layer must not leak outside its namespace')
 arch('Api controllers must be invokable')
     ->expect('App\Http\Controllers\Api')
     ->toBeInvokable()
-    ->ignoring('App\Http\Controllers\Api\ApiBaseController');
+    ->ignoring('App\Http\Controllers\Api\V1\ApiBaseController');
 
 arch('Api controllers must extend api base controller')
     ->expect('App\Http\Controllers\Api')
     ->toBeClasses()
-    ->toExtend('App\Http\Controllers\Api\ApiBaseController');
+    ->toExtend('App\Http\Controllers\Api\V1\ApiBaseController');
 
 arch('Controllers must have controller suffix')
     ->expect('App\Http\Controllers')

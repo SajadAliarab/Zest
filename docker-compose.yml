@@ -1,6 +1,7 @@
 networks:
     zest_network:
         name: zest_network
+
 services:
     app:
         build:
@@ -13,9 +14,33 @@ services:
         volumes:
             - ./:/var/www
         ports:
-            - "6668:6668"
+            - "9000:9000"
+        env_file:
+            - .env.docker
         depends_on:
-            - mailhog
+            mysql:
+                condition: service_healthy
+            mailhog:
+                condition: service_started
+
+    mysql:
+        image: mysql:8.0
+        container_name: zest_mysql
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password --ssl=0
+        env_file:
+            - .env.docker
+        ports:
+            - "3307:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+        networks:
+            - zest_network
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
 
     web:
         image: nginx:stable-alpine3.21-perl
@@ -35,9 +60,23 @@ services:
         container_name: zest_mailhog
         ports:
             - "1025:1025"
-            - "9000:9000"
+            - "8025:8025"
         networks:
             - zest_network
 
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: zest_phpmyadmin
+        restart: always
+        env_file:
+            - .env.docker
+        ports:
+            - "8081:80"
+        networks:
+            - zest_network
+        depends_on:
+            - mysql
 
-
+volumes:
+    mysql_data:
+        driver: local

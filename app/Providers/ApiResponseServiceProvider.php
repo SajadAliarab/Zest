@@ -31,8 +31,8 @@ class ApiResponseServiceProvider extends ServiceProvider
     }
 
     public static function successResponse(
-        ResourceCollection|JsonResource|Collection|array|null $data = null,
-        array|string $messages = [],
+        ResourceCollection | JsonResource | Collection | array | null $data = null,
+        array | string $messages = [],
         bool $hasPagination = false,
         int $responseCode = HttpResponse::HTTP_OK,
     ): JsonResponse {
@@ -52,7 +52,7 @@ class ApiResponseServiceProvider extends ServiceProvider
     }
 
     public static function errorResponse(
-        array|string $messages = [],
+        array | string $messages = [],
         int $responseCode = HttpResponse::HTTP_BAD_REQUEST
     ): JsonResponse {
         return new JsonResponse([
