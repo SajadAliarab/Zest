@@ -17,11 +17,12 @@ class EditCategory extends EditRecord
         $alt = $this->form->getComponent('alt')->getState();
 
         // If no new image uploaded, skip
-        if (!$image) {
+        if (! $image) {
             return;
         }
 
         // Remove old attachment if exists
+
         if ($this->record->attachment) {
             // Optional: also delete old file from storage
             if (Storage::disk($this->record->attachment->disk)->exists($this->record->attachment->path)) {
@@ -38,7 +39,7 @@ class EditCategory extends EditRecord
             'name' => pathinfo($image, PATHINFO_FILENAME),
             'size' => Storage::disk($disk)->size($image),
             'mime_type' => Storage::disk($disk)->mimeType($image),
-            'alt'=> $alt
+            'alt' => $alt,
         ]);
     }
 }

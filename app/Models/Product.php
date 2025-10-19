@@ -16,23 +16,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string | null $description
  * @property float $price
  * @property float | null $discount
- * @property boolean $status
+ * @property bool $status
  * @property CarbonImmutable | null $created_at
  * @property CarbonImmutable | null $updated_at
  * @property CarbonImmutable | null $deleted_at
  */
 class Product extends Model
 {
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
 
-    public function casts():array
+    public function casts(): array
     {
         return [
-            "price" => "decimal:2",
-            "status" => "boolean",
+            'price' => 'decimal:2',
+            'status' => 'boolean',
         ];
     }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
@@ -14,16 +14,15 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->longText('description')->nullable();
-            $table->decimal('price',10,2);
-            $table->decimal('discount',10,2)->nullable();
+            $table->decimal('price', 10, 2);
+            $table->decimal('discount', 10, 2)->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
     }
-
     public function down(): void
     {
         Schema::dropIfExists('products');
     }
-}
+};

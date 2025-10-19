@@ -4,11 +4,9 @@ namespace App\Filament\Admin\Resources\Categories\Schemas;
 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 class CategoryForm
 {
@@ -30,7 +28,7 @@ class CategoryForm
                     ->nullable()
                     ->label('Alternative text for image')
                     ->dehydrated(false)
-                    ->default(fn ($record) => $record?->attachment?->alt),
+                    ->default(fn (mixed $record): ?string => $record?->attachment?->alt),
                 Textarea::make('description')
                     ->columnSpanFull(),
 

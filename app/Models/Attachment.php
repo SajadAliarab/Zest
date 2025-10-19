@@ -24,7 +24,7 @@ class Attachment extends Model
 {
     use HasFactory;
 
-    public function url()
+    public function url(): string
     {
         return Storage::disk($this->disk)
             ->url($this->path);

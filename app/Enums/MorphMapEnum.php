@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-use App\Models\User;
 use App\Models\Category;
+use App\Models\User;
 
 enum MorphMapEnum: string
 {

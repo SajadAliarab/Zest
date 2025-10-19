@@ -20,20 +20,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property CarbonImmutable | null $updated_at
  * @property CarbonImmutable | null $deleted_at
  */
-
 class Category extends Model
 {
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Category::class,'parent_id');
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 
     public function children(): HasMany
     {
-        return $this->hasMany(Category::class,'parent_id');
+        return $this->hasMany(Category::class, 'parent_id');
     }
 
     public function products(): HasMany
@@ -43,6 +42,6 @@ class Category extends Model
 
     public function attachment(): MorphOne
     {
-        return $this->morphOne(Attachment::class,'attachmentable');
+        return $this->morphOne(Attachment::class, 'attachmentable');
     }
 }
