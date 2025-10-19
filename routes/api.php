@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Auth\SignInController;
 use App\Http\Controllers\Api\V1\Auth\SignOutController;
 use App\Http\Controllers\Api\V1\Auth\SignUpController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
+use App\Http\Controllers\Api\V1\Category\GetCategoriesController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('api.')
@@ -22,5 +23,11 @@ Route::name('api.')
                     });
                 Route::post('/email/verification-notification', VerifyEmailController::class)
                     ->middleware(['auth:sanctum', 'throttle:6,1']);
+                // Category
+                Route::name('category.')
+                    ->prefix('category')
+                    ->group(function () {
+                        Route::get('/', GetCategoriesController::class)->name('list');
+                    });
             });
     });
