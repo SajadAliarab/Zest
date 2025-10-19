@@ -14,6 +14,7 @@ return new class extends Migration
                 ->after('mime_type');
         });
     }
+
     public function down(): void
     {
         Schema::table('attachments', function (Blueprint $table) {
